@@ -51,27 +51,33 @@ namespace MigrationTest2.Execution
                     {
                         while (true)
                         {
-                            Console.WriteLine("Enter status to Show Status");
-                            Console.WriteLine("Enter cancel to cancel task");
-                            
-                            string choice=Console.ReadLine();
-                            if (choice.Equals("cancel"))
+                            if (!MigrateTask.IsCompleted)
                             {
-                                cts.Cancel();
-                                //Console.WriteLine("TaskCancelled");
-                                break;
+                                Console.WriteLine("Enter status to Show Status");
+                                Console.WriteLine("Enter cancel to cancel task");
+
+                                string choice = Console.ReadLine();
+                                if (choice.Equals("cancel"))
+                                {
+                                    cts.Cancel();
+                                    //Console.WriteLine("TaskCancelled");
+                                    break;
+                                }
+                                else if (choice.Equals("status"))
+                                {
+                                    MigrationOperation.ShowMigrationStatus();
+                                }
+
+                                if (cts.IsCancellationRequested)
+                                    break;
+
                             }
-                            else if(choice.Equals("status"))
-                            {
-                                 MigrationOperation.ShowMigrationStatus();
-                            }
-                            
                         }
                     });
 
                     Task MergerdTask = await Task.WhenAny(new[] { MigrateTask, cancelTask });
 
-                    if (MergerdTask.IsCompleted && cts.IsCancellationRequested)
+                    if ((MergerdTask.IsCompleted) && cts.IsCancellationRequested)
                     {
                         Console.WriteLine("Migration Cancelled....");
                         MigrationOperation.UpdateMigration(migrateid, "Cancelled");

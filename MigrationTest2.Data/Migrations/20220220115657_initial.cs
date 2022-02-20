@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MigrationTest2.Data.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,8 +16,7 @@ namespace MigrationTest2.Data.Migrations
                     Start = table.Column<int>(type: "int", nullable: false),
                     End = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeTaken = table.Column<TimeSpan>(type: "time", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -46,6 +46,7 @@ namespace MigrationTest2.Execution
                     counter+=100;
                     batchCounter+=100;
 
+                    if(!cts.IsCancellationRequested)
                     taskList.Add(PerformMigration(SourceTableList, cts));
                         //t.Wait();
                 }
@@ -58,20 +59,28 @@ namespace MigrationTest2.Execution
         {
             //foreach (var source in SourceTableList)
             //    Console.WriteLine(source.ID);
-            //var databaseContext = new MigrationDbContext();
+            var databaseContext1 = new MigrationDbContext();
             var DestinationData = new List<DestinationModel>();
+
 
             if (!cts.IsCancellationRequested)
             {
                 foreach (var item in SourceTableList)
                 {
-                        //Console.WriteLine(item.ID);
-                        DestinationData.Add(new DestinationModel()
+
+                    var check = databaseContext1.destinationModels.Find(item.ID);
+                    
+                        if (!cts.IsCancellationRequested)
                         {
-                            SourceId = item.ID,
-                            Total = await Addition(item.FirstNumner, item.SecondNumber)
-                        });
-                    }
+                            //Console.WriteLine(item.ID);
+                            DestinationData.Add(new DestinationModel()
+                            {
+                                SourceId = item.ID,
+                                Total = await Addition(item.FirstNumner, item.SecondNumber)
+                            });
+                        }
+                    
+                }
                     //foreach(var item in DestinationData)
                     //    Console.WriteLine(item.Total);
 

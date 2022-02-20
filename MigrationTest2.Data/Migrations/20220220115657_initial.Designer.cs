@@ -10,8 +10,8 @@ using MigrationTest2.Data;
 namespace MigrationTest2.Data.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20220217145657_init")]
-    partial class init
+    [Migration("20220220115657_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,9 +60,6 @@ namespace MigrationTest2.Data.Migrations
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<TimeSpan>("TimeTaken")
-                        .HasColumnType("time");
 
                     b.HasKey("Id");
 

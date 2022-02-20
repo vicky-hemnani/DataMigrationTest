@@ -20,5 +20,12 @@ namespace MigrationTest2.Data
             }
             base.OnConfiguring(optionsBuilder);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DestinationModel>()
+                .HasIndex(b => b.SourceId)
+                .IsUnique();
+        }
     }
 }
